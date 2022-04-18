@@ -25,8 +25,8 @@ function host {
 
         # Download the file and run the update script.
         pct exec $i -- wget -O /tmp/filupdatee.sh $UPDATE_SCRIPT; 
-        pct exec $i -- bash /tmp/update.sh
-    fi
+        pct exec $i -- bash /tmp/update.sh;
+    done;
 }
 
 function if_alpine_pre {
