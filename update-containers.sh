@@ -15,30 +15,36 @@ function update_container {
 
     if command -v apk &>/dev/null; then
         update_alpine
+        exit
     fi
 }
 
 function host {
-    for i in $(pct list | awk '/[0-9]/{print $1}'); do 
+    for i in $(pct list | awk '/[0-9]/{print $1}'); do
         # Check container for pre-requisite things
-        if_alpine_pre $i;
+        if_alpine_pre $i
 
         # Download the file and run the update script.
-        pct exec $i -- wget -O /tmp/filupdatee.sh $UPDATE_SCRIPT; 
-        pct exec $i -- bash /tmp/update.sh;
-    done;
+        pct exec $i -- wget -O /tmp/filupdatee.sh $UPDATE_SCRIPT
+        pct exec $i -- bash /tmp/update.sh
+    done
 }
 
 function if_alpine_pre {
-    # Check if wget is installed on alpine
-    if ! pct exec $1 -- which wget; then 
-        apk add wget
+    if pct exec $1 -- which apk; then
+        echo "ALPINE LINUX CONTAINER DETECTED ON THE HOST, GOING TO CHECK IF IT HAS TOOLS."
+
+        # Check if wget is installed on alpine
+        if ! pct exec $1 -- which wget; then
+            apk add wget
+        fi
+
+        # Check if bash is installed on alpine.
+        if ! pct exec $1 -- which bash; then
+            apk add wget
+        fi
     fi
 
-    # Check if bash is installed on alpine.
-    if ! pct exec $1 -- which bash; then 
-        apk add wget
-    fi
 }
 
 function update_alpine {
