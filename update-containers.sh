@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-UPDATE_SCRIPT="https://gist.githubusercontent.com/Elycin/994cee6f0dd287901f06c2768e7cefd2/raw/caedbdad7532e352b6297950921234c5eb88ae31/update.sh"
+UPDATE_SCRIPT="https://raw.githubusercontent.com/Elycin/proxmox-tooling/main/update-containers.sh"
 
 function update_container {
     if command -v apt-get &>/dev/null; then
